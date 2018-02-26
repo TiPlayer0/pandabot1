@@ -28,7 +28,7 @@ bot.on('message', message => {
         message.reply("Bien le bonjour. =D");
         console.log("Commande Salut effectué");
     }
-    if message.content === prefix + "embed"){
+    if (message.content === prefix + "embed"){
         var embed = new Discord.RichEmbed()
             .setTitle("EMBED")
             .setDescription("Ceci est un embed")

@@ -13,7 +13,7 @@ bot.login(process.env.TOKEN);
 bot.on('message', message => {
 
     if (message.content === prefix + "help"){
-        message.channel.send("```Liste des commandes: \n -help \n -tt \n -fabriquand \n -Salut \n -embed");
+        message.channel.send("```Liste des commandes: \n -help \n -tt \n -fabriquand \n -Salut \n -embed```");
     }
 
     if (message.content === prefix + "tt"){

@@ -4,7 +4,7 @@ const bot = new Discord.Client();
 var prefix = (";")
 
 bot.on('ready', function() {
-    bot.user.setActivity("Work-in progres");
+    bot.user.setActivity(";help");
     console.log("Connectedç");
 });
 
@@ -27,4 +27,15 @@ bot.on('message', message => {
     if (message.content === "Salut"){
         message.reply("Bien le bonjour. =D");
         console.log("Commande Salut effectué");
-}})
+    }
+    if message.content === prefix + "embed"){
+        var embed = new Discord.RichEmbed()
+            .setTitle("EMBED")
+            .setDescription("Ceci est un embed")
+            .addField(".help","Page d'aide", true)
+            .addField("Embed01","Embed 01 ! :) ajoutez [PandaBot](https://goo.gl/wdhcTQ) sur votre discord", true)
+            .setColor("0xFF0000")
+            .setFooter("Bon mement parmis nous ! :)")
+        message.channel.sendEmbed(embed);
+    }
+})

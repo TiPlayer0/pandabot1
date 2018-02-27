@@ -28,6 +28,17 @@ bot.on('message', message => {
         message.reply("Bien le bonjour. =D");
         console.log("Commande Salut effectué");
     }
+    
+    if (message.content === "Bonjour"){
+        message.reply("Bien le bonjour. =D");
+        console.log("Commande Salut effectué");
+    }
+    
+    if (message.content === "Coucou"){
+        message.reply("Bien le bonjour. =D");
+        console.log("Commande Salut effectué");
+    }
+    
     if (message.content === prefix + "embed"){
         var embed = new Discord.RichEmbed()
             .setTitle("EMBED")

@@ -1,43 +1,61 @@
-const Discord = require("discord.js");
-const bot = new Discord.Client();
+const Discord = require('discord.js')
+const bot = new Discord.Client()
 
 var prefix = (";")
 
-bot.on('ready', function() {
-    bot.user.setActivity(";help");
-    console.log("Connectedç");
-});
+bot.on('ready', function () {
+  console.log("Je suis connecté !")
+})
 
-bot.login(process.env.TOKEN);
+bot.login('TOKEN')
+
+bot.on('message', message => {
+  if (message.content === 'ping') {
+    message.reply('pong !')
+  }
+})
+
+bot.on('guildMemberAdd', member => {
+  member.createDM().then(channel => {
+    return channel.send('Bienvenue sur mon serveur ' + member.displayName)
+  }).catch(console.error)
+  // On pourrait catch l'erreur autrement ici (l'utilisateur a peut être désactivé les MP)
+})
 
 bot.on('message', message => {
 
-    if (message.content === prefix + "help"){
-        message.channel.send("```Liste des commandes: \n -help \n -tt \n -fabriquand \n -Salut \n -embed```");
-    }
+  if (message.content.startsWith('!play')) {
+    // On récupère le premier channel audio du serveur
+    let voiceChannel = message.guild.channels
+      .filter(function (channel) { return channel.type === 'voice' })
+      .first()
+    // On récupère les arguments de la commande 
+    // il faudrait utiliser une expression régulière pour valider le lien youtube
+    let args = message.content.split(' ')
+    // On rejoint le channel audio
+    voiceChannel
+      .join()
+      .then(function (connection) {
+        // On démarre un stream à partir de la vidéo youtube
+        let stream = YoutubeStream(args[1])
+        stream.on('error', function () {
+          message.reply("Je n'ai pas réussi à lire cette vidéo :(")
+          connection.disconnect()
+        })
+        // On envoie le stream au channel audio
+        // Il faudrait ici éviter les superpositions (envoie de plusieurs vidéo en même temps)
+        connection
+          .playStream(stream)
+          .on('end', function () {
+            connection.disconnect()
+          })
+      })
+  }
 
-    if (message.content === prefix + "tt"){
-        message.channel.send("Le Bot a était crée le 26/02/2018 à 01:04");
-    }
+})
 
-    if (message.content === prefix + "fabriquand"){
-        message.channel.send("Le Bot a était crée par TiPlayer_0");
-    }
-
-    if (message.content === "Salut"){
-        message.reply("Bien le bonjour. =D");
-        console.log("Commande Salut effectué");
-    }
-    
-    if (message.content === "Bonjour"){
-        message.reply("Bien le bonjour. =D");
-        console.log("Commande Salut effectué");
-    }
-    
-    if (message.content === "Coucou"){
-        message.reply("Bien le bonjour. =D");
-        console.log("Commande Salut effectué");
-    }
-
-
+bot.on('message', message => {
+  if (message.content === 'Salut a tous') {
+    message.reply('Bien le bonjour a toi !')
+  }
 })
